@@ -28,4 +28,23 @@ const fetchMyIP = function(callback) {
   });
 };
 
-module.exports = { fetchMyIP };
+const fetchCoordsByIP = function(ipStr, callback) {
+  request(`https://ipvigilante.com/${ipStr}`, (error, response, body) => {
+    if (error) {
+      return callback(error, null);
+    }
+
+    if (response.statusCode !== 200) {
+      const msg = `Status Code ${response.statusCode} when fetching geographic information. Response: ${body}`;
+      callback(Error(msg), null);
+      return;
+    }
+    let geoObj = {};
+    const myLocationObj = JSON.parse(body);
+    geoObj.latitude = myLocationObj.data.latitude;
+    geoObj.longitude = myLocationObj.data.longitude;
+    callback(null, geoObj);
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP };
