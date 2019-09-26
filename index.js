@@ -32,7 +32,9 @@ nextISSTimesForMyLocation((error, passTimes) => {
   }
   
   for (const obj of passTimes) {
-    const output = `Next pass at ${obj.risetime} for ${obj.duration} seconds!`;
+    const startDate = new Date((obj.risetime)* 1000);
+    const betterDate = startDate.toGMTString() + "-0700 (Pacific Daylight Time)";
+    const output = `Next pass at ${betterDate} for ${obj.duration} seconds!`;
     console.log(output);
   }
 })
