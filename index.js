@@ -26,15 +26,27 @@ const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocat
 //   console.log("It worked!", flyTimes);
 // });
 
+const printPassTimes = function(passTimes) {
+  for (const pass of passTimes) {
+    const datetime = new Date(0);
+    datetime.setUTCSeconds(pass.risetime);
+    const duration = pass.duration;
+    console.log(`Next pass at ${datetime} for ${duration} seconds!`);
+  }
+};
+
 nextISSTimesForMyLocation((error, passTimes) => {
   if (error) {
     return console.log("It didn't work!", error);
   }
-  
-  for (const obj of passTimes) {
-    const startDate = new Date((obj.risetime)* 1000);
-    const betterDate = startDate.toGMTString() + "-0700 (Pacific Daylight Time)";
-    const output = `Next pass at ${betterDate} for ${obj.duration} seconds!`;
-    console.log(output);
-  }
-})
+  printPassTimes(passTimes);
+});
+
+  // for (const obj of passTimes) {
+  //   const startDate = new Date((obj.risetime)* 1000);
+  //   const betterDate = startDate.toGMTString() + "-0700 (Pacific Daylight Time)";
+  //   const output = `Next pass at ${betterDate} for ${obj.duration} seconds!`;
+  //   console.log(output);
+  // }
+
+
