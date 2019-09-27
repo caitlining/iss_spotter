@@ -11,11 +11,13 @@ const fetchMyIP = function() {
 
 const fetchCoordsByIP = function(body) {
   const ip = JSON.parse(body).ip;
-  return request(`https://ipvigilante.com/json/${ip}`);
+  return request(`http://ip-api.com/json/${ip}`);
 };
 
+
 const fetchISSFlyOverTimes = function(body) {
-  const { latitude, longitude } = JSON.parse(body).data;
+  const latitude = JSON.parse(body).lat
+  const longitude = JSON.parse(body).lon
   const url = `http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}`;
   return request(url);
 };
